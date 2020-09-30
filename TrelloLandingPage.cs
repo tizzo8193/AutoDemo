@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.PageObjects;
+using System;
 
 namespace AutoDemo
 {
@@ -32,8 +25,18 @@ namespace AutoDemo
         // Logs into landing page.
         public void Login()
         {
-            driver.Navigate().GoToUrl(landingPageUrl);
-            landingLoginButton.Click();
+            try
+            {
+                driver.Navigate().GoToUrl(landingPageUrl);
+                landingLoginButton.Click();
+            }
+            catch(Exception ex)
+            {
+                driver.Dispose();
+
+                // Brief message about what went wrong.
+                Assert.Fail($"Exception loging in: {ex.Message}");
+            }
         }
     }
 }
